@@ -69,6 +69,6 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        schedule.every(15).seconds.do(run_update)
+        schedule.every(900).seconds.do(run_update)
         th = Thread(target=run_process, daemon=DAEMON, name="update data")
         th.start()
