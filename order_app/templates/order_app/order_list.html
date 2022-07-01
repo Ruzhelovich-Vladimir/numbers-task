@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+{% load static %}
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Задача Numbers</title>
+</head>
+<body>
+
+    <nav aria-label="...">
+      <ul class="pagination">
+
+          <li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}">
+              <span class="page-link">
+                  <a class="page-link"
+                     href="{% if page_obj.has_previous %} ?page={{ page_obj.previous_page_number }} {% endif %}">
+                      Prev
+                  </a>
+              </span>
+          </li>
+
+          <li class="page-item">
+              <span class="page-link">
+                  <a class="page-link" href="?page=1">
+                      1
+                  </a>
+              </span>
+          </li>
+
+          {% if page_obj.number != page_obj.next_page_number and page_obj.number != 1 %}
+              <li class="page-item disabled">
+                  <span class="page-link">
+                      <a class="page-link"
+                             href="#">
+                             {{ page_obj.number }}
+                        </a>
+                  </span>
+              </li>
+          {% endif %}
+
+          <li class="page-item">
+                <span class="page-link">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+                </span>
+          </li>
+
+          <li class="page-item {% if not page_obj.has_next %} disabled {% endif %}">
+              <span class="page-link">
+                    <a class="page-link" href="{% if page_obj.has_next %} ?page={{ page_obj.next_page_number }} {% endif %}">Next</a>
+              </span>
+          </li>
+      </ul>
+    </nav>
+
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Номер заказ</th>
+          <th scope="col">Сумма (USD)</th>
+          <th scope="col">Сумма (RUB)</th>
+          <th scope="col">Дата доставки</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for order in object_list %}
+        <tr>
+            <th scope="row">{{ order.pk }}</th>
+            <td>{{ order.order_no }}</td>
+            <td>{{ order.usd_cost }}</td>
+            <td>{{ order.rub_cost }}</td>
+            <td>{{ order.delivery_day|date:"D d.m.Y" }}</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+
+</html>
+
+
+

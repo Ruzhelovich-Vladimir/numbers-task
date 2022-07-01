@@ -1,0 +1,33 @@
+version: '3.3'
+
+services:
+  db:
+    # Образ и версия базы, которую мы будем использовать
+    image: postgres:14.4
+    # Внешний том(volume) и место где он будет подключен внутри контейнера
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data/
+    environment:
+      # Учетные данные, которые можно будет переопределить
+      - POSTGRES_USER=numbers_user
+      - POSTGRES_PASSWORD=Zaqmko321
+      - POSTGRES_DB=numbers_task
+    ports:
+      - 5432:5432
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bash -c "python3 manage.py runserver 0.0.0.0:8000"
+#    volumes:
+#      - ./app/
+#      - /usr/src/app/
+    depends_on:
+      - db
+    ports:
+      - 8000:8000
+    env_file:
+      - ./.env.dev
+
+volumes:
+  postgres_volume:
